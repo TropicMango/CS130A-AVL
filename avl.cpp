@@ -45,9 +45,9 @@ int main(int argc, char** argv) {
       
       cout << "Added " << main_tree.nodes_added << " of " << i << " nodes.\n";
       float NV = main_tree.nodes_visited;
-      cout << "Visited " << NV << " (" << NV/main_tree.nodes_added << ") nodes and performed ";
+      cout << "Visited " << NV << " (" << NV/i << ") nodes and performed ";
       float RP = main_tree.rotaions_performed;
-      cout << RP << " (" << RP/main_tree.nodes_added << ") rotations.\n";
+      cout << RP << " (" << RP/i << ") rotations.\n";
       main_tree.stat_reset();
       
     } else if(strstart(line, "lookup")) {
