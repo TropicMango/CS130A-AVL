@@ -13,10 +13,13 @@ Node* AVLTree::createNode(const int key) {
 
 AVLTree::AVLTree() {
   root = NULL;
+  nodes_added = 0;
+  nodes_visited = 0;
+  rotaions_performed = 0;
 }
 
 AVLTree::~AVLTree() {
-
+  destroy_helper(root);
 }
 
 int AVLTree::get_height(Node* node) {
@@ -193,23 +196,44 @@ std::string AVLTree::string() {
   return to_string_helper(root, 0);
 }
 
-std::string AVLTree::get_L_L_helper(Node* n) {
+std::string AVLTree::get_L_L() { 
+//   std::string r = "";
+//   r += "The following inserts would cause a left-left rotation:\n";
+//   std::string list = get_L_L_helper(root, INT_MIN);
+//   return r + list;
+return "";
+}
+
+std::string AVLTree::get_L_L_helper(Node* n, int lower_bound) {
+  std::string r = "";
   int tilt = 0;
+  if(n->left == NULL)
+    return "";
+  
   if(n != NULL)
   	tilt = get_height(n->left) - get_height(n->right);
 
-  std::string r = "";
   if (tilt > 0) {
-    while(n->left != NULL){
-	  n = n->left;
-    }
-    r += "The following inserts would cause a left-left rotation:\n";
-    r += "-2147483648 to " + std::to_string(n->key - 1) + "\n";
-  } else {
-    r += "No inserts would cause a left-left rotation.\n";
+    int lower = n->left->left->key + 1;
+    int upper = n->left->key - 1;
+    if(lower != upper)
+      r += std::to_string(lower) + " to " + std::to_string(upper) + "\n";
+    else
+      r += std::to_string(lower) + "\n";
+      
+    r += std::to_string(lower_bound) + " to " + std::to_string(n->key - 1) + "\n";
   }
   return r;
 }
+
+std::string AVLTree::get_L_R() { 
+//   std::string r = "";
+//   r += "The following inserts would cause a left-right rotation:\n";
+//   r += get_L_R_helper(root);
+//   return r;
+return "";
+}
+
 std::string AVLTree::get_L_R_helper(Node* n) {
   int tilt = 0;
   if(n != NULL)
@@ -229,6 +253,15 @@ std::string AVLTree::get_L_R_helper(Node* n) {
   }
   return r;
 }
+
+std::string AVLTree::get_R_L() { 
+//   std::string r = "";
+//   r += "The following inserts would cause a right-left rotation:\n";
+//   r += get_R_L_helper(root);
+//   return r;
+return "";
+}
+
 std::string AVLTree::get_R_L_helper(Node* n) {
   int tilt = 0;
   if(n != NULL)
@@ -248,7 +281,16 @@ std::string AVLTree::get_R_L_helper(Node* n) {
   }
   return r;
 }
-std::string AVLTree::get_R_R_helper(Node* n) {
+
+std::string AVLTree::get_R_R() { 
+//   std::string r = "";
+//   r += "The following inserts would cause a right-right rotation:\n";
+//   r += get_R_R_helper(root, INT_MAX);
+//   return r;
+return "";
+}
+
+std::string AVLTree::get_R_R_helper(Node* n, int upper_bound) {
   int tilt = 0;
   if(n != NULL)
   	tilt = get_height(n->left) - get_height(n->right);
@@ -259,9 +301,17 @@ std::string AVLTree::get_R_R_helper(Node* n) {
 		n = n->right;
   	}
   	r += "The following inserts would cause a right-right rotation:\n";
-  	r += std::to_string(n->key + 1) + " to 2147483647\n";
+  	r += std::to_string(n->key + 1) + " to " + std::to_string(upper_bound) + "\n";
   } else {
     r += "No inserts would cause a right-right rotation.\n";
   }
   return r;
+}
+
+void AVLTree::destroy_helper(Node* n) {
+  if(n == NULL)
+    return;
+  destroy_helper(n->left);
+  destroy_helper(n->right);
+  delete(n);
 }

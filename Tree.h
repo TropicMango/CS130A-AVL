@@ -23,10 +23,12 @@ class AVLTree {
   
   std::string to_string_helper(Node* n, int level);
   
-  std::string get_L_L_helper(Node* n);
+  std::string get_L_L_helper(Node* n, int lower_bound);
   std::string get_L_R_helper(Node* n);
   std::string get_R_L_helper(Node* n);
-  std::string get_R_R_helper(Node* n);
+  std::string get_R_R_helper(Node* n, int upper_bound);
+  
+  void destroy_helper(Node* n);
 
 public:
   int nodes_added;

@@ -41,7 +41,7 @@ int main(int argc, char** argv) {
       	if(pos == int(string::npos)) break;
       }
       
-      cout << "Added " << main_tree.nodes_added << " of " << i << " nodes.\n";
+      cout << "Added " << to_string(main_tree.nodes_added) << " of " << to_string(i) << " nodes.\n";
       float NV = main_tree.nodes_visited;
       cout << "Visited " << NV << " (" << NV/i << ") nodes and performed ";
       float RP = main_tree.rotaions_performed;
@@ -80,18 +80,18 @@ int main(int argc, char** argv) {
       main_tree.stat_reset();
       
     } else if(strstart(line, "print")) {
-      string mod_string = line.substr(6, line.length());
-      if(strstart(mod_string, "tree")) {
-        cout << main_tree.string();
-      } else if(strstart(mod_string, "left-left")) {
-        cout << main_tree.get_L_L();
-      } else if(strstart(mod_string, "left-right")) {
-        cout << main_tree.get_L_R();
-      } else if(strstart(mod_string, "right-left")) {
-        cout << main_tree.get_R_L();
-      } else if(strstart(mod_string, "right-right")) {
-        cout << main_tree.get_R_R();
-      }
+		string mod_string = line.substr(6, line.length());
+       if(strstart(mod_string, "tree")) {
+         cout << main_tree.string();
+       } else if(strstart(mod_string, "left-left")) {
+         cout << main_tree.get_L_L();
+       } else if(strstart(mod_string, "left-right")) {
+         cout << main_tree.get_L_R();
+       } else if(strstart(mod_string, "right-left")) {
+         cout << main_tree.get_R_L();
+       } else if(strstart(mod_string, "right-right")) {
+         cout << main_tree.get_R_R();
+       }
     }  else {
       continue;
     }
