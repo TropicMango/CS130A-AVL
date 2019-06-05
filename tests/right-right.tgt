@@ -1,0 +1,13 @@
+Added 2 of 2 nodes.
+Visited 1 (0.5) nodes and performed 0 (0) rotations.
+
+The following inserts would cause a right-right rotation:
+2 to 2147483647
+
+Added 1 of 1 nodes.
+Visited 2 (2) nodes and performed 1 (1) rotations.
+
+Node(1, h=1):
+  Leaf(0)
+  Leaf(2)
+

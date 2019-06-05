@@ -1,0 +1,17 @@
+Added 4 of 5 nodes.
+Visited 5 (1) nodes and performed 0 (0) rotations.
+
+Found 3 of 5 nodes: [7, 12, 7]
+Visited 10 (2) nodes and performed 0 (0) rotations.
+
+Node(12, h=2):
+  Leaf(7)
+  Node(108, h=1):
+    Leaf(42)
+    Null
+
+The following inserts would cause a left-left rotation:
+13 to 41
+
+No inserts would cause a right-left rotation.
+

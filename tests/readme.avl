@@ -1,0 +1,17 @@
+# Ignore this line and the next one.
+
+# After this, your tree should contain {7, 12, 42, 108}
+insert 12 7 108 42 12
+
+# Look these up in the tree constructed above:
+lookup 7 14 -82 12 7
+
+# Print the tree
+print tree
+
+# Print ranges that would cause a left-left rotation
+print left-left
+
+# Print ranges that would cause a right-left rotation
+print right-left
+
