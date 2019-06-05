@@ -45,7 +45,7 @@ public:
   std::string get_R_R();
 
   bool insert(const int value);
-  bool lookup(const int value) const;
+  bool lookup(const int value);
   void stat_reset();
 };
 

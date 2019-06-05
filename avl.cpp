@@ -23,9 +23,7 @@ int main(int argc, char** argv) {
   string line;
   while(getline(store, line)) {
     
-    if(strstart(line, "#")) {
-    
-    } else if(strstart(line, "insert")) {
+    if(strstart(line, "insert")) {
       string mod_string = line.substr(7, line.length());
       // by using 7 we clear out the "insert ", for easier splice
       
@@ -51,7 +49,35 @@ int main(int argc, char** argv) {
       main_tree.stat_reset();
       
     } else if(strstart(line, "lookup")) {
-      cout << "lookup" << '\n';
+      string mod_string = line.substr(7, line.length());
+      // by using 7 we clear out the "insert ", for easier splice
+      
+      int pos = mod_string.find(' ');
+      int i = 0;
+      int found = 0;
+      string chunk;
+      string found_nodes = "";
+      while(true){
+        pos = mod_string.find(' ');
+        chunk = mod_string.substr(0, pos);
+      	if(main_tree.lookup(stoi(chunk))){
+      	  found_nodes += chunk + ", ";
+      	  found++;
+      	}
+      	      	
+      	i++;
+      	mod_string.erase(0, pos + 1);
+      	if(pos == int(string::npos)) break;
+      }
+    
+      cout << "Found " << found << " of " << i << " nodes: [";
+      cout << found_nodes.substr(0, found_nodes.length() - 2) << "]\n";
+      
+      float NV = main_tree.nodes_visited;
+      cout << "Visited " << NV << " (" << NV/i << ") nodes and performed ";
+      float RP = main_tree.rotaions_performed;
+      cout << RP << " (" << RP/i << ") rotations.\n";
+      main_tree.stat_reset();
       
     } else if(strstart(line, "print")) {
       string mod_string = line.substr(6, line.length());
@@ -66,6 +92,8 @@ int main(int argc, char** argv) {
       } else if(strstart(mod_string, "right-right")) {
         cout << main_tree.get_R_R();
       }
+    }  else {
+      continue;
     }
     cout << '\n';
   }

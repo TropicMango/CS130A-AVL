@@ -128,8 +128,20 @@ bool AVLTree::insert(const int value) {
   return true;
 }
 
-bool AVLTree::lookup(const int value)const {
-	return value == 1;
+bool AVLTree::lookup(const int value) {
+  Node* n = root;
+  
+  while(n != NULL){
+    nodes_visited++;
+  	if(n->key > value){
+  	  n = n->left;
+  	} else if(n->key < value){
+  	  n = n->right;
+  	} else {
+  	  return true;
+  	}
+  }
+  return false;
 }
 
 void AVLTree::stat_reset() {
@@ -155,12 +167,14 @@ int AVLTree::get_min() {
 }
 
 std::string AVLTree::to_string_helper(Node* n, int level) {
-  if(n == NULL) 
-    return "";
-
   std::string r = "";
   for(int i=0; i<level; i++) {
   	 r += "  ";
+  }
+  
+  if(n == NULL) {
+    r += "Null\n";
+    return r;
   }
   
   if(n->left != NULL || n->right != NULL) {
@@ -179,9 +193,8 @@ std::string AVLTree::string() {
   return to_string_helper(root, 0);
 }
 
-std::string AVLTree::get_L_L() {
+std::string AVLTree::get_L_L_helper(Node* n) {
   int tilt = 0;
-  Node* n = root;
   if(n != NULL)
   	tilt = get_height(n->left) - get_height(n->right);
 
@@ -197,9 +210,8 @@ std::string AVLTree::get_L_L() {
   }
   return r;
 }
-std::string AVLTree::get_L_R() {
+std::string AVLTree::get_L_R_helper(Node* n) {
   int tilt = 0;
-  Node* n = root;
   if(n != NULL)
   	tilt = get_height(n->left) - get_height(n->right);
 
@@ -217,9 +229,8 @@ std::string AVLTree::get_L_R() {
   }
   return r;
 }
-std::string AVLTree::get_R_L() {
+std::string AVLTree::get_R_L_helper(Node* n) {
   int tilt = 0;
-  Node* n = root;
   if(n != NULL)
   	tilt = get_height(n->left) - get_height(n->right);
 
@@ -237,9 +248,8 @@ std::string AVLTree::get_R_L() {
   }
   return r;
 }
-std::string AVLTree::get_R_R() {
+std::string AVLTree::get_R_R_helper(Node* n) {
   int tilt = 0;
-  Node* n = root;
   if(n != NULL)
   	tilt = get_height(n->left) - get_height(n->right);
   
