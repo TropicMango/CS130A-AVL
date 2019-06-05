@@ -12,7 +12,7 @@ class Node
 };
 
 class AVLTree {
-  Node* root;  // The integer hash function to use
+  Node* root;
 
   Node* createNode(const int key);
   Node* insertHelper(Node* selectedNode, int key);
@@ -22,6 +22,11 @@ class AVLTree {
   Node *rotateLeft(Node *L0);
   
   std::string to_string_helper(Node* n, int level);
+  
+  std::string get_L_L_helper(Node* n);
+  std::string get_L_R_helper(Node* n);
+  std::string get_R_L_helper(Node* n);
+  std::string get_R_R_helper(Node* n);
 
 public:
   int nodes_added;
