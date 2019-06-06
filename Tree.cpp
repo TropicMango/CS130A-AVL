@@ -200,7 +200,7 @@ std::string AVLTree::string() {
 std::string AVLTree::get_L_L() { 
   std::string r = "";
   r += "The following inserts would cause a left-left rotation:\n";
-  r += get_L_L_helper(root, INT_MIN);
+  r += get_L_L_helper(root, -2147483648);
   r = r.substr(0, r.length() - 2);
   r += "\n";
   return r; // gets rid of the extra comma at the end
@@ -306,7 +306,7 @@ std::string AVLTree::get_R_L_helper(Node* n) {
 std::string AVLTree::get_R_R() { 
   std::string r = "";
   r += "The following inserts would cause a right-right rotation:\n";
-  r += get_R_R_helper(root, INT_MAX + 1);
+  r += get_R_R_helper(root, 2147483647);
   r = r.substr(0, r.length() - 2);
   r += "\n";
   return r; // gets rid of the extra comma at the end
