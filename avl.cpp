@@ -98,6 +98,5 @@ int main(int argc, char** argv) {
     cout << '\n';
   }
 
-  cout << '\n';
   store.close();
 }

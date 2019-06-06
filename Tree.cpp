@@ -194,10 +194,7 @@ std::string AVLTree::to_string_helper(Node* n, int level) {
 
 std::string AVLTree::string() {
   std::string r = to_string_helper(root, 0);
-  if(r.substr(r.length() - 2, r.length()).compare("\n\n")) {
-    r = r.substr(0, r.length() - 1);
-  }
-  return r.substr(0, r.length());
+  return r;
 }
 
 std::string AVLTree::get_L_L() { 
