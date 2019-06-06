@@ -1,4 +1,4 @@
-insert 2 1
+insert 50 30 100 20 40 75 1005 15
 print left-left
 
 insert 0

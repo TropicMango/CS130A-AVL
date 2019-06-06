@@ -197,115 +197,143 @@ std::string AVLTree::string() {
 }
 
 std::string AVLTree::get_L_L() { 
-//   std::string r = "";
-//   r += "The following inserts would cause a left-left rotation:\n";
-//   std::string list = get_L_L_helper(root, INT_MIN);
-//   return r + list;
-return "";
+  std::string r = "";
+  r += "The following inserts would cause a left-left rotation:\n";
+  r += get_L_L_helper(root, INT_MIN);
+  r = r.substr(0, r.length() - 2);
+  r += "\n";
+  return r; // gets rid of the extra comma at the end
 }
 
 std::string AVLTree::get_L_L_helper(Node* n, int lower_bound) {
   std::string r = "";
-  int tilt = 0;
-  if(n->left == NULL)
-    return "";
   
-  if(n != NULL)
-  	tilt = get_height(n->left) - get_height(n->right);
-
-  if (tilt > 0) {
-    int lower = n->left->left->key + 1;
+  if(n == NULL)
+    return r;
+  if(n->left == NULL)
+    return get_L_L_helper(n->right, n->key);
+  
+    
+  int tilt = get_height(n->left) - get_height(n->right);
+  int L_tilt = get_height(n->left->left) - get_height(n->left->right);
+  
+  if (tilt > 0 && L_tilt <= 0) { // left heavy and the left is not left heavy
+    int lower = lower_bound + 1;
     int upper = n->left->key - 1;
     if(lower != upper)
-      r += std::to_string(lower) + " to " + std::to_string(upper) + "\n";
+      r += std::to_string(lower) + " to " + std::to_string(upper) + ", ";
     else
-      r += std::to_string(lower) + "\n";
-      
-    r += std::to_string(lower_bound) + " to " + std::to_string(n->key - 1) + "\n";
+      r += std::to_string(lower) + ", ";
+  } else {
+    r += get_L_L_helper(n->left, lower_bound);
   }
-  return r;
+  
+  r += get_L_L_helper(n->right, n->key);
+  return  r;
 }
 
 std::string AVLTree::get_L_R() { 
-//   std::string r = "";
-//   r += "The following inserts would cause a left-right rotation:\n";
-//   r += get_L_R_helper(root);
-//   return r;
-return "";
+  std::string r = "";
+  r += "The following inserts would cause a left-right rotation:\n";
+  r += get_L_R_helper(root);
+  r = r.substr(0, r.length() - 2);
+  r += "\n";
+  return r; // gets rid of the extra comma at the end
 }
 
 std::string AVLTree::get_L_R_helper(Node* n) {
-  int tilt = 0;
-  if(n != NULL)
-  	tilt = get_height(n->left) - get_height(n->right);
-
   std::string r = "";
-  if (tilt > 0) {
-    r += "The following inserts would cause a left-right rotation:\n";
+  
+  if(n == NULL)
+    return r;
+  if(n->left == NULL)
+    return get_L_R_helper(n->right);
+  
+    
+  int tilt = get_height(n->left) - get_height(n->right);
+  int L_tilt = get_height(n->left->left) - get_height(n->left->right);
+  
+  if (tilt > 0 && L_tilt >= 0) { // left heavy and the left is not right heavy
     int lower = n->left->key + 1;
     int upper = n->key - 1;
     if(lower != upper)
-      r += std::to_string(lower) + " to " + std::to_string(upper) + "\n";
+      r += std::to_string(lower) + " to " + std::to_string(upper) + ", ";
     else
-      r += std::to_string(lower) + "\n";
+      r += std::to_string(lower) + ", ";
   } else {
-    r += "No inserts would cause a left-right rotation.\n";
+    r += get_L_R_helper(n->left);
   }
-  return r;
+  
+  r += get_L_R_helper(n->right);
+  return  r;
 }
 
 std::string AVLTree::get_R_L() { 
-//   std::string r = "";
-//   r += "The following inserts would cause a right-left rotation:\n";
-//   r += get_R_L_helper(root);
-//   return r;
-return "";
+  std::string r = "";
+  r += "The following inserts would cause a right-left rotation:\n";
+  r += get_R_L_helper(root);
+  r = r.substr(0, r.length() - 2);
+  r += "\n";
+  return r; // gets rid of the extra comma at the end
 }
 
 std::string AVLTree::get_R_L_helper(Node* n) {
-  int tilt = 0;
-  if(n != NULL)
-  	tilt = get_height(n->left) - get_height(n->right);
-
   std::string r = "";
-  if (tilt < 0) {
-    r += "The following inserts would cause a right-left rotation:\n";
-    int lower = n->key + 1;
-    int upper = n->right->key - 1;
-    if(lower != upper)
-      r += std::to_string(lower) + " to " + std::to_string(upper) + "\n";
-    else
-      r += std::to_string(lower) + "\n";
+  
+  if(n == NULL)
+    return r;
+  if(n->right == NULL)
+    return get_R_L_helper(n->left);
+  
+  r += get_R_L_helper(n->left);
+    
+  int tilt = get_height(n->left) - get_height(n->right);
+  int R_tilt = get_height(n->right->left) - get_height(n->right->right);
+  if (tilt < 0 && R_tilt >= 0) { // right heavy and right is not left heavy
+      int lower = n->key + 1;
+      int upper = n->right->key - 1;
+      if(lower != upper)
+        r += std::to_string(lower) + " to " + std::to_string(upper) + ", ";
+      else
+        r += std::to_string(lower) + ", ";
   } else {
-    r += "No inserts would cause a right-left rotation.\n";
+      r += get_R_L_helper(n->right);
   }
-  return r;
+  return  r;
 }
 
 std::string AVLTree::get_R_R() { 
-//   std::string r = "";
-//   r += "The following inserts would cause a right-right rotation:\n";
-//   r += get_R_R_helper(root, INT_MAX);
-//   return r;
-return "";
+  std::string r = "";
+  r += "The following inserts would cause a right-right rotation:\n";
+  r += get_R_R_helper(root, INT_MAX);
+  r = r.substr(0, r.length() - 2);
+  r += "\n";
+  return r; // gets rid of the extra comma at the end
 }
 
 std::string AVLTree::get_R_R_helper(Node* n, int upper_bound) {
-  int tilt = 0;
-  if(n != NULL)
-  	tilt = get_height(n->left) - get_height(n->right);
-  
   std::string r = "";
-  if (tilt < 0) {
-  	while(n->right != NULL){
-		n = n->right;
-  	}
-  	r += "The following inserts would cause a right-right rotation:\n";
-  	r += std::to_string(n->key + 1) + " to " + std::to_string(upper_bound) + "\n";
+  
+  if(n == NULL)
+    return r;
+  if(n->right == NULL)
+    return get_R_R_helper(n->left, upper_bound);
+  
+  r += get_R_R_helper(n->left, n->key);
+    
+  int tilt = get_height(n->left) - get_height(n->right);
+  int R_tilt = get_height(n->right->left) - get_height(n->right->right);
+  if (tilt < 0 && R_tilt >= 0) { // right heavy and right is not right heavy
+      int lower = n->right->key + 1;
+      int upper = upper_bound - 1;
+      if(lower != upper)
+        r += std::to_string(lower) + " to " + std::to_string(upper) + ", ";
+      else
+        r += std::to_string(lower) + ", ";
   } else {
-    r += "No inserts would cause a right-right rotation.\n";
+      r += get_R_R_helper(n->right, n->key);
   }
-  return r;
+  return  r;
 }
 
 void AVLTree::destroy_helper(Node* n) {
