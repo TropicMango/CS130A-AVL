@@ -171,10 +171,10 @@ int AVLTree::get_min() {
 
 std::string AVLTree::to_string_helper(Node* n, int level) {
   std::string r = "";
+  
   for(int i=0; i<level; i++) {
   	 r += "  ";
   }
-  
   if(n == NULL) {
     r += "Null\n";
     return r;
@@ -193,7 +193,11 @@ std::string AVLTree::to_string_helper(Node* n, int level) {
 }
 
 std::string AVLTree::string() {
-  return to_string_helper(root, 0);
+  std::string r = to_string_helper(root, 0);
+  if(r.substr(r.length() - 2, r.length()).compare("\n\n")) {
+    r = r.substr(0, r.length() - 1);
+  }
+  return r.substr(0, r.length());
 }
 
 std::string AVLTree::get_L_L() { 
@@ -305,7 +309,7 @@ std::string AVLTree::get_R_L_helper(Node* n) {
 std::string AVLTree::get_R_R() { 
   std::string r = "";
   r += "The following inserts would cause a right-right rotation:\n";
-  r += get_R_R_helper(root, INT_MAX);
+  r += get_R_R_helper(root, INT_MAX + 1);
   r = r.substr(0, r.length() - 2);
   r += "\n";
   return r; // gets rid of the extra comma at the end
