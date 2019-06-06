@@ -199,10 +199,14 @@ std::string AVLTree::string() {
 
 std::string AVLTree::get_L_L() { 
   std::string r = "";
-  r += "The following inserts would cause a left-left rotation:\n";
   r += get_L_L_helper(root, -2147483648);
   r = r.substr(0, r.length() - 2);
-  r += "\n";
+  if(r.length() == 0) {
+    r += "No inserts would cause a left-left rotation.";
+  } else {
+    r += "\n";
+    r = "The following inserts would cause a left-left rotation:\n" + r;
+  }
   return r; // gets rid of the extra comma at the end
 }
 
@@ -235,10 +239,14 @@ std::string AVLTree::get_L_L_helper(Node* n, int lower_bound) {
 
 std::string AVLTree::get_L_R() { 
   std::string r = "";
-  r += "The following inserts would cause a left-right rotation:\n";
   r += get_L_R_helper(root);
   r = r.substr(0, r.length() - 2);
-  r += "\n";
+  if(r.length() == 0) {
+    r += "No inserts would cause a left-right rotation.";
+  } else {
+    r += "\n";
+    r = "The following inserts would cause a left-right rotation:\n" + r;
+  }
   return r; // gets rid of the extra comma at the end
 }
 
@@ -271,10 +279,14 @@ std::string AVLTree::get_L_R_helper(Node* n) {
 
 std::string AVLTree::get_R_L() { 
   std::string r = "";
-  r += "The following inserts would cause a right-left rotation:\n";
   r += get_R_L_helper(root);
   r = r.substr(0, r.length() - 2);
-  r += "\n";
+  if(r.length() == 0) {
+    r += "No inserts would cause a right-left rotation.\n";
+  } else {
+    r += "\n";
+    r = "The following inserts would cause a right-left rotation:\n" + r;
+  }
   return r; // gets rid of the extra comma at the end
 }
 
@@ -290,7 +302,7 @@ std::string AVLTree::get_R_L_helper(Node* n) {
     
   int tilt = get_height(n->left) - get_height(n->right);
   int R_tilt = get_height(n->right->left) - get_height(n->right->right);
-  if (tilt < 0 && R_tilt >= 0) { // right heavy and right is not left heavy
+  if (tilt < 0 && R_tilt <= 0) { // right heavy and right is not left heavy
       int lower = n->key + 1;
       int upper = n->right->key - 1;
       if(lower != upper)
@@ -305,10 +317,14 @@ std::string AVLTree::get_R_L_helper(Node* n) {
 
 std::string AVLTree::get_R_R() { 
   std::string r = "";
-  r += "The following inserts would cause a right-right rotation:\n";
   r += get_R_R_helper(root, 2147483647);
   r = r.substr(0, r.length() - 2);
-  r += "\n";
+  if(r.length() == 0) {
+    r += "No inserts would cause a right-right rotation.\n";
+  } else {
+    r += "\n";
+    r = "The following inserts would cause a right-right rotation:\n" + r;
+  }
   return r; // gets rid of the extra comma at the end
 }
 
